@@ -85,6 +85,8 @@
     </form>
 
 ### App.js 수정 2
+
+    [1]~[7]
     import React, { Component } from 'react';
 
     class App extends Component {
@@ -174,7 +176,7 @@
 ### controller resource 로 생성하기
     php artisan make:controller TaskController --resource
 ### web.php
-    Route::resource('Tasks', 'TaskController');
+    Route::resource('tasks', 'TaskController');
     php artisan route:list
 ### TasksController.php #1 auth미들웨어 걸기
     public function __construct(){
@@ -184,4 +186,5 @@
     use \App\Task; 작성
 ### TasksController.php #3 
     [1]~[6]
-###
+### App.js
+    [8] handlesubmit 생성

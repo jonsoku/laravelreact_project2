@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 
 class App extends Component {
     // [1] constructor
@@ -10,6 +11,10 @@ class App extends Component {
         }
         //[6] bind
         this.handleChange = this.handleChange.bind(this);
+        //[9] bind
+        this.handleSubmit = this.handleSubmit.bind(this);
+        //[12] bind
+        this.renderTasks = this.renderTasks.bind(this);
     }
     // [2] handle change
     handleChange(e){
@@ -17,7 +22,47 @@ class App extends Component {
             //[5] log 로 확인한 것을 state에 넣는다.
             name: e.target.value
         })
-        //[3] console.log(e.target.value);
+        //주석처리! [3]
+        //console.log(e.target.value);
+    }
+    //[8] handle submit
+    handleSubmit(e){
+        e.preventDefault();
+        Axios.post('/tasks', {
+            name:this.state.name
+        }).then(response => {
+            //console.log('from handle submit!', response)
+            //[10]
+            this.setState({
+                tasks: [response.data, ...this.state.tasks],
+                name: ''
+            })
+        });
+    }
+
+    //[11] render tasks
+    renderTasks(){
+        return this.state.tasks.map(task => (
+            <div key={task.id} className="media">
+                <div className="media-body">
+                    <div>
+                        <p>{task.id}</p>
+                        <p>{task.name}</p>
+                        <p>{task.created_at}</p>
+                    </div>
+                </div>
+            </div>
+        ));
+    }
+    //[12][14] get all the tasks from backend
+    getTasks(){
+        Axios.get('/tasks').then(response => this.setState({
+            tasks : [...response.data.tasks]
+        }));
+    }
+    //[13] lifecycle method
+    componentWillMount(){
+        this.getTasks();
     }
 
 
@@ -31,7 +76,7 @@ class App extends Component {
                             <div className="card-header">Example Component</div>
 
                             <div className="card-body">
-                                <form>
+                                <form onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <textarea
                                         //[4] console.log에 찍히는 것을 확인하기위해서 가즈아!
@@ -45,6 +90,8 @@ class App extends Component {
                                     </div>
                                     <button type="submit" className="btn btn-primary">create</button>
                                 </form>
+                                <hr />
+                                {this.renderTasks()}
                             </div>
                         </div>
                     </div>

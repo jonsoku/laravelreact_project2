@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 //[1]
-use \App\Task;
+use App\Task;
 
 class TaskController extends Controller
 {
@@ -15,12 +15,17 @@ class TaskController extends Controller
     public function index(Request $request, Task $task)
     {
         //[5] get all the tasks basaed on current user id
-        $allTasks = $task->whereIn('user_id', $request->user()->with('user'));
-        $tasks = $allTasks->orderBy('created_at', 'desc')->take(20)->get();
+        // $allTasks = $task->whereIn('user_id', $request->user()->with('user'));
+        // $tasks = $allTasks->orderBy('created_at', 'desc')->take(20)->get();
+
+        //[7] 위에꺼 안되서;;
+        $tasks = Task::orderBy('created_at', 'desc')->get();;
+
         //[6] return json response
         return response()->json([
             'tasks' => $tasks
         ]);
+
     }
 
     public function create()
@@ -39,7 +44,7 @@ class TaskController extends Controller
             'name' => $request->name,
         ]);
         //[4] return tasks with user object
-        return response()->json($task->with('user')->find($tasks->id));
+        return response()->json($task->with('user')->find($task->id));
     }
 
     public function show($id)
