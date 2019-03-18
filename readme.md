@@ -188,3 +188,23 @@
     [1]~[6]
 ### App.js
     [8] handlesubmit 생성
+
+### react-route-dom 
+    yarn add react-router-dom
+### index.js 
+    import React, { Component } from 'react';
+    import ReactDOM from 'react-dom';
+    import App from './components/App';
+    import {BrowserRouter, Switch, Route} from 'react-router-dom';
+    if (document.getElementById('root')) {
+        ReactDOM.render(
+        <BrowserRouter>
+            <div>
+                <Switch>
+                    <App />
+                </Switch>
+            </div>
+        </BrowserRouter>
+        , document.getElementById('root'));
+    }
+

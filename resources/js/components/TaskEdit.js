@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react'
+import Axios from 'axios'
 
-class App extends Component {
+class TaskEdit extends Component {
     // [1] constructor
     constructor(props){
         super(props);
         this.state={
             name: '',
-            tasks: []
+            task: []
         }
         //[6] bind
         this.handleChange = this.handleChange.bind(this);
         //[9] bind
         this.handleSubmit = this.handleSubmit.bind(this);
-        //[12] bind
-        this.renderTasks = this.renderTasks.bind(this);
-        //[16] bint
-        this.handleDelete = this.handleDelete.bind(this);
     }
     // [2] handle change
     handleChange(e){
@@ -43,26 +38,11 @@ class App extends Component {
         });
     }
 
-    //[11] render tasks
-    renderTasks(){
-        return this.state.tasks.map(task => (
-            <div key={task.id} className="media">
-                <div className="media-body">
-                    <div>
-                        <p>{task.id}</p>
-                        <p>{task.name}</p>
-                        <p>{task.created_at}</p>
-                    </div>
-                    <Link to={`/${task.id}/edit`} className="btn btn-sm btn-success float-right">Edit</Link>
-                    <button onClick={()=>this.handleDelete(task.id)} className="btn btn-sm btn-warning float-right">DELETE</button>
-                </div>
-            </div>
-        ));
-    }
     //[12][14] get all the tasks from backend
     getTasks(){
-        Axios.get('/tasks').then(response => this.setState({
-            tasks : [...response.data.tasks]
+        Axios.get(`/tasks/${this.props.match.params.id}/edit`).then(response => this.setState({
+            task : response.data.task,
+            name: response.data.task.name
         }));
     }
     //[13] lifecycle method
@@ -70,19 +50,10 @@ class App extends Component {
         this.getTasks();
     }
 
-    //[15] handle DELETE
-    handleDelete(id){
-        // remove from local state
-        const isNotId = task => task.id !== id;
-        const updateTasks = this.state.tasks.filter(isNotId);
-        this.setState({tasks: updateTasks})
-        // make delete request to the backend
-        Axios.delete(`/tasks/${id}`);
-    }
-
 
 
     render() {
+        console.log(this.props.match.params.id);
         return (
             <div className="container">
                 <div className="row justify-content-center">
@@ -105,8 +76,6 @@ class App extends Component {
                                     </div>
                                     <button type="submit" className="btn btn-primary">create</button>
                                 </form>
-                                <hr />
-                                {this.renderTasks()}
                             </div>
                         </div>
                     </div>
@@ -115,5 +84,4 @@ class App extends Component {
         );
     }
 }
-
-export default App;
+export default TaskEdit;
