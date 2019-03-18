@@ -26,15 +26,12 @@ class TaskEdit extends Component {
     //[8] handle submit
     handleSubmit(e){
         e.preventDefault();
-        Axios.post('/tasks', {
+        Axios.put(`/tasks/${this.props.match.params.id}`, {
             name:this.state.name
         }).then(response => {
             //console.log('from handle submit!', response)
             //[10]
-            this.setState({
-                tasks: [response.data, ...this.state.tasks],
-                name: ''
-            })
+            this.props.history.push('/');
         });
     }
 
@@ -59,7 +56,7 @@ class TaskEdit extends Component {
                 <div className="row justify-content-center">
                     <div className="col-md-8">
                         <div className="card">
-                            <div className="card-header">Example Component</div>
+                            <div className="card-header">Edit Task</div>
 
                             <div className="card-body">
                                 <form onSubmit={this.handleSubmit}>
@@ -74,7 +71,7 @@ class TaskEdit extends Component {
                                         placeholder="create a new task"
                                         required/>
                                     </div>
-                                    <button type="submit" className="btn btn-primary">create</button>
+                                    <button type="submit" className="btn btn-primary">Edit</button>
                                 </form>
                             </div>
                         </div>
