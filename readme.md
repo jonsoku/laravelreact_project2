@@ -74,4 +74,14 @@
     3. js/app.js require 변경
     require('./index');
 
-### 
+### App.js 수정
+    div사이에 form 추가 
+
+    <form>
+        <div className="form-group">
+            <textarea className="form-control" rows="5" placeholder="create a new task" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">create</button>
+    </form>
+
+### 1. constructor(){} 생성
