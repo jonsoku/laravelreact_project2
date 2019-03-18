@@ -15,6 +15,8 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         //[12] bind
         this.renderTasks = this.renderTasks.bind(this);
+        //[16] bint
+        this.handleDelete = this.handleDelete.bind(this);
     }
     // [2] handle change
     handleChange(e){
@@ -50,6 +52,7 @@ class App extends Component {
                         <p>{task.name}</p>
                         <p>{task.created_at}</p>
                     </div>
+                    <button onClick={()=>this.handleDelete(task.id)} className="btn btn-sm btn-warning float-right">DELETE</button>
                 </div>
             </div>
         ));
@@ -63,6 +66,16 @@ class App extends Component {
     //[13] lifecycle method
     componentWillMount(){
         this.getTasks();
+    }
+
+    //[15] handle DELETE
+    handleDelete(id){
+        // remove from local state
+        const isNotId = task => task.id !== id;
+        const updateTasks = this.state.tasks.filter(isNotId);
+        this.setState({tasks: updateTasks})
+        // make delete request to the backend
+        Axios.delete(`/tasks/${id}`);
     }
 
 

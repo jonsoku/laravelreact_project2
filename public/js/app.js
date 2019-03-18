@@ -61357,7 +61357,9 @@ function (_Component) {
 
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this)); //[12] bind
 
-    _this.renderTasks = _this.renderTasks.bind(_assertThisInitialized(_this));
+    _this.renderTasks = _this.renderTasks.bind(_assertThisInitialized(_this)); //[16] bint
+
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     return _this;
   } // [2] handle change
 
@@ -61393,23 +61395,30 @@ function (_Component) {
   }, {
     key: "renderTasks",
     value: function renderTasks() {
+      var _this3 = this;
+
       return this.state.tasks.map(function (task) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: task.id,
           className: "media"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "media-body"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, task.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, task.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, task.created_at))));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, task.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, task.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, task.created_at)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this3.handleDelete(task.id);
+          },
+          className: "btn btn-sm btn-warning float-right"
+        }, "DELETE")));
       });
     } //[12][14] get all the tasks from backend
 
   }, {
     key: "getTasks",
     value: function getTasks() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/tasks').then(function (response) {
-        return _this3.setState({
+        return _this4.setState({
           tasks: _toConsumableArray(response.data.tasks)
         });
       });
@@ -61419,6 +61428,22 @@ function (_Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       this.getTasks();
+    } //[15] handle DELETE
+
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      // remove from local state
+      var isNotId = function isNotId(task) {
+        return task.id !== id;
+      };
+
+      var updateTasks = this.state.tasks.filter(isNotId);
+      this.setState({
+        tasks: updateTasks
+      }); // make delete request to the backend
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("/tasks/".concat(id));
     }
   }, {
     key: "render",
