@@ -50,8 +50,11 @@ class App extends Component {
                 <div className="media-body">
                     <div>
                         <p>{task.id}</p>
-                        <p>{task.name}</p>
-                        <p>{task.created_at}</p>
+                        <p>{task.name}{''}</p>
+                        <span className="text-muted">
+                        <br />
+                        by {task.user.name} | {task.updated_at.split(' ').slice(1).join(' ')}
+                        </span>
                     </div>
                     <Link to={`/${task.id}/edit`} className="btn btn-sm btn-success float-right">Edit</Link>
                     <button onClick={()=>this.handleDelete(task.id)} className="btn btn-sm btn-warning float-right">DELETE</button>

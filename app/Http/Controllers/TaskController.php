@@ -19,8 +19,9 @@ class TaskController extends Controller
         // $tasks = $allTasks->orderBy('created_at', 'desc')->take(20)->get();
 
         //[7] 위에꺼 안되서;;
-        $tasks = Task::orderBy('created_at', 'desc')->get();;
-
+        $allTasks = $task->whereIn('user_id', $request->user())->with('user');
+		$tasks = $allTasks->orderBy('created_at', 'desc')->take(10)->get();
+		// return json response
         //[6] return json response
         return response()->json([
             'tasks' => $tasks

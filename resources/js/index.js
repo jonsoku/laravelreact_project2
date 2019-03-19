@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+// import App from './components/App';
+import Post from './components/Post';
+import PostShow from './components/PostShow';
+import PostCreate from './components/PostCreate';
 import TaskEdit from './components/TaskEdit';
-import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+import {HashRouter, Link, Switch, Route} from 'react-router-dom';
+import PostEdit from './components/PostEdit';
 
 // const Home = () => (
 //     <div>
@@ -22,7 +26,7 @@ import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
 
 if (document.getElementById('root')) {
     ReactDOM.render(
-    <BrowserRouter>
+    <HashRouter>
         <div>
             {/* <ul>
                 <li>
@@ -36,12 +40,16 @@ if (document.getElementById('root')) {
                 </li>
             </ul> */}
             <Switch>
-                <Route exact path="/:id/edit" exact component={TaskEdit} />
-                <App />
+                {/* <Route exact path="/:id/edit" exact component={TaskEdit} />
+                <App /> */}
+                <Route exact path ="/posts/:id" exact component={PostShow}/>
+                <Route exact path ="/:id/edit" exact component={PostEdit}/>
+                <Route exact path ="/create" exact component={PostCreate}/>
+                <Post />
                 {/* <Route exact path="/about" exact component={About} />
                 <Route exact path="/topics" exact component={Topic} /> */}
             </Switch>
         </div>
-    </BrowserRouter>
+    </HashRouter>
     , document.getElementById('root'));
 }
