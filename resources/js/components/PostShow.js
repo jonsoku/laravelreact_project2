@@ -28,7 +28,7 @@ class PostShow extends Component {
                     <Link to={`/${this.state.post.id}/edit`}>Edit</Link>
                 </div>
                 <div>
-                    <button onClick={()=>this.handleDelete(this.state.post.id)}>Delete</button>
+                <button onClick={()=>this.handleDelete(this.state.post.id)}>Delete</button>
                 </div>
             </div>
         )

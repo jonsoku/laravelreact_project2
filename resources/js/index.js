@@ -5,7 +5,7 @@ import Post from './components/Post';
 import PostShow from './components/PostShow';
 import PostCreate from './components/PostCreate';
 import TaskEdit from './components/TaskEdit';
-import {HashRouter, Link, Switch, Route} from 'react-router-dom';
+import {HashRouter as Router ,Link, Switch, Route} from 'react-router-dom';
 import PostEdit from './components/PostEdit';
 
 // const Home = () => (
@@ -26,7 +26,7 @@ import PostEdit from './components/PostEdit';
 
 if (document.getElementById('root')) {
     ReactDOM.render(
-    <HashRouter>
+    <Router>
         <div>
             {/* <ul>
                 <li>
@@ -50,6 +50,6 @@ if (document.getElementById('root')) {
                 <Route exact path="/topics" exact component={Topic} /> */}
             </Switch>
         </div>
-    </HashRouter>
+    </Router>
     , document.getElementById('root'));
 }

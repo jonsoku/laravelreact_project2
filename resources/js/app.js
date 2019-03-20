@@ -14,3 +14,4 @@ require('./bootstrap');
  */
 
 require('./index');
+require('./Notice');
